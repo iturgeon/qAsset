@@ -1,0 +1,21 @@
+{
+    "name": "iturgeon/qasset",
+    "description": "FuelPHP CSS and Javascript asset management",
+    "keywords": ["fuelphp", "css", "js", "Javascript", "assets", "qasset", "casset"],
+    "homepage": "https://github.com/iturgeon/qAsset",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ian Turgeon",
+            "email": "iturgeon@gmail.com",
+            "homepage": "http://ianturgeon.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {"qasset": "src/"}
+    }
+}
