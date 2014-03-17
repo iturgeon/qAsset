@@ -4,6 +4,24 @@ qAsset
 This library lets you manage Javascript and CSS includes in FuelPHP using configuration files like Casset, minus all the the processing features.  I switched to using pre-processors for all of this stuff, so I wanted a simpler library to manage assets.
 
 
+Install
+=================
+
+Install using Composer, if qAsset isn't uploaded to Packagist, add this repo using the `repositories` directive as shown below. 
+
+```json
+    "repositories" : [
+        {
+            "url":"https://github.com/iturgeon/qAsset.git",
+            "type":"git"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "iturgeon/qasset": "1.0.0"
+    },
+```
+
 Configuration
 ==================
 
