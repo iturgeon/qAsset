@@ -12,8 +12,8 @@ class Js
 		if ( ! static::$_inited)
 		{
 			\Config::load('js', true);
-			static::process_allways_load();
 			static::$_inited = true;
+			static::process_allways_load();
 		}
 	}
 

@@ -12,8 +12,8 @@ class Css
 		if ( ! static::$_inited)
 		{
 			\Config::load('css', true);
-			static::process_allways_load();
 			static::$_inited = true;
+			static::process_allways_load();
 		}
 	}
 
