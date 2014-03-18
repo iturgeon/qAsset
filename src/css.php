@@ -1,6 +1,7 @@
 <?
 class Css
 {
+	protected static $_inited = false;
 	protected static $_css_assets = [];
 	protected static $_css_raw = [];
 	protected static $_path_patterns;
@@ -8,8 +9,12 @@ class Css
 
 	public static function _init()
 	{
-		\Config::load('css', true);
-		static::process_allways_load();
+		if ( ! static::$_inited)
+		{
+			\Config::load('css', true);
+			static::process_allways_load();
+			static::$_inited = true;
+		}
 	}
 
 	/**
@@ -20,6 +25,7 @@ class Css
 	 */
 	public static function add_group($groups, $placement = 'default')
 	{
+		static::_init();
 		if ( ! is_array($groups)) $groups = [$groups];
 		foreach ($groups as $key => $group)
 		{
@@ -37,6 +43,7 @@ class Css
 	 */
 	public static function add_css($stylesheets, $placement = 'default')
 	{
+		static::_init();
 		$placement = static::get_placement($placement);
 		if ( ! is_array($stylesheets)) $stylesheets = [$stylesheets];
 		static::place_css($stylesheets, $placement);
@@ -44,6 +51,7 @@ class Css
 
 	public static function add_css_inline($stylesheet, $placement = 'default')
 	{
+		static::_init();
 		$placement = static::get_placement($placement);
 		if ( ! is_array($stylesheet)) $stylesheet = [$stylesheet];
 		static::place_css($stylesheet, $placement, true);
@@ -51,6 +59,7 @@ class Css
 
 	public static function render($placement = 'default')
 	{
+		static::_init();
 		$placement = static::get_placement($placement);
 		$output = '';
 
@@ -88,6 +97,7 @@ class Css
 		{
 			$output = "\n<!-- Start css: $placement -->\n{$output}<!-- End css: $placement -->\n";
 		}
+
 		return $output;
 	}
 

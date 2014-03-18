@@ -1,6 +1,7 @@
 <?
 class Js
 {
+	protected static $_inited = false;
 	protected static $_js_assets = [];
 	protected static $_js_raw = [];
 	protected static $_path_patterns;
@@ -8,8 +9,12 @@ class Js
 
 	public static function _init()
 	{
-		\Config::load('js', true);
-		static::process_allways_load();
+		if ( ! static::$_inited)
+		{
+			\Config::load('js', true);
+			static::process_allways_load();
+			static::$_inited = true;
+		}
 	}
 
 	/**
@@ -20,6 +25,7 @@ class Js
 	 */
 	public static function add_group($groups, $placement = 'default')
 	{
+		static::_init();
 		if ( ! is_array($groups)) $groups = [$groups];
 		foreach ($groups as $key => $group)
 		{
@@ -37,6 +43,7 @@ class Js
 	 */
 	public static function add_js($scripts, $placement = 'default')
 	{
+		static::_init();
 		$placement = static::get_placement($placement);
 		if ( ! is_array($scripts)) $scripts = [$scripts];
 		static::place_script($scripts, $placement);
@@ -44,6 +51,7 @@ class Js
 
 	public static function add_js_inline($script, $placement = 'default')
 	{
+		static::_init();
 		$placement = static::get_placement($placement);
 		if ( ! is_array($script)) $script = [$script];
 		static::place_script($script, $placement, true);
@@ -51,6 +59,7 @@ class Js
 
 	public static function render($placement = 'default')
 	{
+		static::_init();
 		$placement = static::get_placement($placement);
 		$output = '';
 
