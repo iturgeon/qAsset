@@ -23,7 +23,7 @@ class Js
 	 * @param  [string] $placement      Either 'head' or 'footer' for placement within the layout
 	 * @return [bool]                   True if found/added, false if not
 	 */
-	public static function add_group($groups, $placement = 'default')
+	public static function use_group($groups, $placement = 'default')
 	{
 		static::_init();
 		if ( ! is_array($groups)) $groups = [$groups];
@@ -37,11 +37,11 @@ class Js
 	}
 
 	/**
-	 * Add a script or string of javascript to one of the javascript placements
-	 * @param [string|array] $script    String or Array of urls for scripts to add
+	 * Use a script or string of javascript to one of the javascript placements
+	 * @param [string|array] $script    String or Array of urls for scripts to use
 	 * @param string $placement         Either 'head' or 'footer' for placement within the layout
 	 */
-	public static function add_js($scripts, $placement = 'default')
+	public static function use($scripts, $placement = 'default')
 	{
 		static::_init();
 		$placement = static::get_placement($placement);
@@ -49,7 +49,7 @@ class Js
 		static::place_script($scripts, $placement);
 	}
 
-	public static function add_js_inline($script, $placement = 'default')
+	public static function use_inline($script, $placement = 'default')
 	{
 		static::_init();
 		$placement = static::get_placement($placement);
@@ -142,7 +142,7 @@ class Js
 		{
 			foreach ($js as $group => $scripts)
 			{
-				static::add_group($scripts, $group);
+				static::use_group($scripts, $group);
 			}
 		}
 	}

@@ -84,18 +84,18 @@ You can prepare CSS and JS inline in your controller methods, I find this easy f
 	public function action_index()
 	{
 		// insert the javascript group 'homepage' (defined in js.php config) into the footer placement
-		Js::add_group('homepage', 'footer');
+		Js::use_group('homepage', 'footer');
 
 		// adds a script directly w/o using groups, send an array of scripts if you want 
-		Js::add_js('theme::homepage.min.js');
+		Js::use('theme::homepage.min.js');
 
 		// adds inline javascript to the footer
-		Js::add_js_inline('var CONST = true;', 'footer');
+		Js::use_inline('var CONST = true;', 'footer');
 
 		// Css works the same way as Js
-		Css::add_group(['homepage', 'holiday']); // you can send arrays!
-		Css::add_css(['theme::one.css', 'theme::two.css']); // more arrays here
-		Css::add_css_inline('div.total-mistake{ display:none; }'); // for those last minute monkey patches
+		Css::use_group(['homepage', 'holiday']); // you can send arrays!
+		Css::use(['theme::one.css', 'theme::two.css']); // more arrays here
+		Css::use_inline('div.total-mistake{ display:none; }'); // for those last minute monkey patches
 
 		$theme = Theme::instance();
 		$theme->set_template('layouts/homepage')

@@ -23,7 +23,7 @@ class Css
 	 * @param  [string] $placement      Either 'head' or 'footer' for placement within the layout
 	 * @return [bool]                   True if found/added, false if not
 	 */
-	public static function add_group($groups, $placement = 'default')
+	public static function use_group($groups, $placement = 'default')
 	{
 		static::_init();
 		if ( ! is_array($groups)) $groups = [$groups];
@@ -37,11 +37,11 @@ class Css
 	}
 
 	/**
-	 * Add a stylesheet or string of css to one of the css placements
-	 * @param [string|array] $stylesheet    String or Array of urls for stylesheets to add
+	 * Use a stylesheet or string of css to one of the css placements
+	 * @param [string|array] $stylesheet    String or Array of urls for stylesheets to use
 	 * @param string $placement         Either 'head' or 'footer' for placement within the layout
 	 */
-	public static function add_css($stylesheets, $placement = 'default')
+	public static function use($stylesheets, $placement = 'default')
 	{
 		static::_init();
 		$placement = static::get_placement($placement);
@@ -49,7 +49,7 @@ class Css
 		static::place_css($stylesheets, $placement);
 	}
 
-	public static function add_css_inline($stylesheet, $placement = 'default')
+	public static function use_inline($stylesheet, $placement = 'default')
 	{
 		static::_init();
 		$placement = static::get_placement($placement);
@@ -141,7 +141,7 @@ class Css
 		{
 			foreach ($css as $group => $stylesheets)
 			{
-				static::add_group($stylesheets, $group);
+				static::use_group($stylesheets, $group);
 			}
 		}
 	}
