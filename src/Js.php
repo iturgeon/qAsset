@@ -12,7 +12,7 @@ class Js
 		if ( ! static::$_inited)
 		{
 			\Config::load('js', true);
-			\Config::load('asset_hash.json', true);
+			\Config::load('asset_hash.json', 'js.asset_hash');
 			static::$_inited = true;
 			static::process_allways_load();
 		}
@@ -151,15 +151,8 @@ class Js
 
 	protected static function get_hash_for_file($file)
 	{
-		$defined_hashes = \Config::get("asset_hash");
-		foreach ($defined_hashes as $filepath => $hash)
-		{
-			if ($filepath == $file)
-			{
-				return $hash;
-			}
-		}
+		$defined_hashes = \Config::get("js.asset_hash", []);
 
-		return "";
+		return empty($defined_hashes[$file]) ? '' : $defined_hashes[$file];
 	}
 }
