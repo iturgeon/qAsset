@@ -12,6 +12,7 @@ class Css
 		if ( ! static::$_inited)
 		{
 			\Config::load('css', true);
+			\Config::load('asset_hash.json', 'css.asset_hash');
 			static::$_inited = true;
 			static::process_allways_load();
 		}
@@ -76,7 +77,8 @@ class Css
 				if ( ! empty($stylesheet))
 				{
 					$stylesheet = static::resolve_path($stylesheet);
-					$output .= "<link rel=\"stylesheet\" href=\"$stylesheet\">\n";
+					$hash = static::get_hash_for_file($stylesheet);
+					$output .= "<link rel=\"stylesheet\" href=\"$stylesheet?$hash\">\n";
 				}
 			}
 		}
@@ -146,4 +148,10 @@ class Css
 		}
 	}
 
+	protected static function get_hash_for_file($file)
+	{
+		$defined_hashes = \Config::get("css.asset_hash", []);
+
+		return empty($defined_hashes[$file]) ? '' : $defined_hashes[$file];
+	}
 }
