@@ -1,4 +1,4 @@
-<?
+<?php
 class Js
 {
 	protected static $_inited = false;
@@ -71,7 +71,7 @@ class Js
 			{
 				$scripts = array_unique($scripts);
 			}
-			
+
 			foreach ($scripts as $script)
 			{
 				if ( ! empty($script))

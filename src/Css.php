@@ -1,4 +1,4 @@
-<?
+<?php
 class Css
 {
 	protected static $_inited = false;
