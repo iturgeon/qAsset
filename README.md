@@ -1,11 +1,9 @@
-qAsset
-==================
+## qAsset
 
-This library lets you manage Javascript and CSS includes in FuelPHP using configuration files like Casset, minus all the the processing features.  I switched to using pre-processors for all of this stuff, so I wanted a simpler library to manage assets.
+This library lets you manage Javascript and CSS includes in FuelPHP using configuration files like [Casset](https://github.com/canton7/fuelphp-casset), minus all the the processing features.  I switched to using pre-processors for all of this stuff, so I wanted a simpler library to manage assets.
 
 
-Install
-=================
+## Install
 
 Install using Composer, if qAsset isn't uploaded to Packagist, add this repo using the `repositories` directive as shown below. 
 
@@ -22,12 +20,12 @@ Install using Composer, if qAsset isn't uploaded to Packagist, add this repo usi
     },
 ```
 
-Configuration
-==================
+## Configuration
 
 Groups, and default groups can be configured in config files. There is a config for js (fuel/app/config/js.php), and one for css (css.php).
 
 Here is a sample css.php config
+
 ```php
 <?php
 return [
@@ -70,11 +68,38 @@ return [
 		],
 	],
 
+	// Change the precalulated hash config file name, defaults to 'asset_hash.json'
+	// Supports any fuelphp config format
+	'hash_file' => 'asset_hash.json'
 ];
 ```
 
-Usage
-==================
+### Cache Busting with precalculated Hashes
+
+qAsset allows you to load pre-calculated file hashes to append to urls for the purpose of cache busting. Many pre-processors allow you pre-calculate file hashes like `hash-assets-webpack-plugin` or `gulp-hashsum-json` while building those files, this little feature will support those hashes.
+
+By default css and js load from `asset_hash.json`, but they can be configured to load seperate files if that suits your needs better.
+
+That config file needs to return an associative array where the key is the file reletive to the public directory, and the value is the hash
+
+Ex:
+
+```json
+{
+	"/assets/file.js": "hash_value",
+	"/assets/file2.js": "other_value"
+}
+
+```
+
+When included in the page, these 2 files will have their hash appended for the purposes of cache busting.
+
+```html
+<script src="/assets/file.js?hash_value"></script>
+<script src="/assets/file2.js?other_value"></script>
+```
+
+## Usage
 
 You can prepare CSS and JS inline in your controller methods, I find this easy for quick and dirty setup.  Later I come back and move reusables to the config file.
 

@@ -12,7 +12,8 @@ class Css
 		if ( ! static::$_inited)
 		{
 			\Config::load('css', true);
-			\Config::load('asset_hash.json', 'css.asset_hash');
+			$hash_file = \Config::get('css.hash_file', 'asset_hash.json');
+			\Config::load($hash_file, 'css.asset_hash');
 			static::$_inited = true;
 			static::process_allways_load();
 		}
@@ -71,14 +72,14 @@ class Css
 			{
 				$stylesheets = array_unique($stylesheets);
 			}
-			
+
 			foreach ($stylesheets as $stylesheet)
 			{
 				if ( ! empty($stylesheet))
 				{
 					$stylesheet = static::resolve_path($stylesheet);
 					$hash = static::get_hash_for_file($stylesheet);
-					$output .= "<link rel=\"stylesheet\" href=\"$stylesheet?$hash\">\n";
+					$output .= "<link rel=\"stylesheet\" href=\"{$stylesheet}{$hash}\">\n";
 				}
 			}
 		}
@@ -130,7 +131,7 @@ class Css
 		if ( ! isset(static::$_path_patterns))
 		{
 			$paths = \Config::get('css.paths', []);
-			static::$_path_patterns     = array_map(function($value){return "/$value::/";}, array_keys($paths));
+			static::$_path_patterns     = array_map(function($value){return "/^$value::/";}, array_keys($paths));
 			static::$_path_replacements = array_values($paths);
 		}
 		$resolved = preg_replace(static::$_path_patterns, static::$_path_replacements, $stylesheet);
@@ -152,6 +153,6 @@ class Css
 	{
 		$defined_hashes = \Config::get("css.asset_hash", []);
 
-		return empty($defined_hashes[$file]) ? '' : $defined_hashes[$file];
+		return empty($defined_hashes[$file]) ? '' : '?'.$defined_hashes[$file];
 	}
 }

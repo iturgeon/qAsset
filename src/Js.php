@@ -12,7 +12,8 @@ class Js
 		if ( ! static::$_inited)
 		{
 			\Config::load('js', true);
-			\Config::load('asset_hash.json', 'js.asset_hash');
+			$hash_file = \Config::get('js.hash_file', 'asset_hash.json');
+			\Config::load($hash_file, 'js.asset_hash');
 			static::$_inited = true;
 			static::process_allways_load();
 		}
@@ -78,7 +79,7 @@ class Js
 				{
 					$script = static::resolve_path($script);
 					$hash = static::get_hash_for_file($script);
-					$output .= "<script type=\"text/javascript\" src=\"$script?$hash\"></script>\n";
+					$output .= "<script type=\"text/javascript\" src=\"{$script}{$hash}\"></script>\n";
 				}
 			}
 		}
@@ -131,7 +132,7 @@ class Js
 		if ( ! isset(static::$_path_patterns))
 		{
 			$paths = \Config::get('js.paths', []);
-			static::$_path_patterns     = array_map(function($value){return "/$value::/";}, array_keys($paths));
+			static::$_path_patterns     = array_map(function($value){return "/^$value::/";}, array_keys($paths));
 			static::$_path_replacements = array_values($paths);
 		}
 		$resolved = preg_replace(static::$_path_patterns, static::$_path_replacements, $script);
@@ -153,6 +154,6 @@ class Js
 	{
 		$defined_hashes = \Config::get("js.asset_hash", []);
 
-		return empty($defined_hashes[$file]) ? '' : $defined_hashes[$file];
+		return empty($defined_hashes[$file]) ? '' : '?'.$defined_hashes[$file];
 	}
 }
