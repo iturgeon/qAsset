@@ -1,5 +1,5 @@
 <?php
-use \Config;
+use \Fuel\Core\Config;
 
 trait QAsset {
 
@@ -65,7 +65,7 @@ trait QAsset {
 		self::_init();
 		$placement = self::get_placement($placement);
 		if ( ! is_array($asset)) $asset = [$asset];
-		self::place_asset($asset, $placement, true);
+		self::place_asset($asset, $placement, $inline);
 	}
 
 	protected static function place_asset($assets, $placement, $inline = false)
