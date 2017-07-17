@@ -6,7 +6,7 @@ class Css
 	public static function _init()
 	{
 		self::$inline_tag = 'style';
-		self::$js_or_css = 'css';
+		self::$prefix = 'css';
 		self::_shared_init();
 	}
 
@@ -14,6 +14,5 @@ class Css
 	{
 		return "<link rel=\"stylesheet\" href=\"{$asset}{$hash}\">\n";
 	}
-
 
 }

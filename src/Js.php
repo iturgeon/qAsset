@@ -6,7 +6,7 @@ class Js
 	public static function _init()
 	{
 		self::$inline_tag = 'script';
-		self::$js_or_css = 'js';
+		self::$prefix = 'js';
 		self::_shared_init();
 	}
 
